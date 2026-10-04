@@ -1,4 +1,31 @@
 {
   "description": "AI-powered creative tools for image generation, upscaling, background removal, and more",
-  "secrets": []
+  "secrets": [],
+  "tests": [
+    {
+      "name": "creative tool page",
+      "path": "/#/creative",
+      "expectText": "No image yet"
+    },
+    {
+      "name": "upscale tool page",
+      "path": "/#/upscale",
+      "expectText": "Upscale"
+    },
+    {
+      "name": "remove background tool page",
+      "path": "/#/remove-bg",
+      "expectText": "No image yet"
+    },
+    {
+      "name": "metadata tool page",
+      "path": "/#/metadata",
+      "expectText": "No file yet"
+    },
+    {
+      "name": "prompt generator tool page",
+      "path": "/#/prompt",
+      "expectText": "Generate prompt"
+    }
+  ]
 }

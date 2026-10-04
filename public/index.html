@@ -108,156 +108,170 @@
   </script>
 </head>
 <body class="min-h-screen bg-ground text-fg">
-  <!-- Built from the design kit in styles/tailwind-input.css: colour tokens
-       (bg-ground, text-muted, bg-accent, ...) that are right in both looks,
-       and components (btn-primary, list, card, state-empty, ...). The real
-       app keeps the kit; CLAUDE.md's "## Design" says how. -->
-  <main class="mx-auto flex max-w-md flex-col gap-8 px-4 py-10">
-
-    <!-- usernode-starter-notice@1 — starter-template messaging. When building
-         the user's real app, replace this whole screen and delete this block,
-         both sentinel comments included. -->
-    <section class="card flex flex-col items-start gap-3">
-      <span class="rounded-full bg-raised px-3 py-1 text-small font-medium text-muted">Starter template</span>
-      <h1 class="text-title">Pixora</h1>
-      <p class="text-body text-muted">Welcome to your new app! Everything on this screen is placeholder content that came with it.</p>
-      <p class="text-body text-muted">Tap the <strong class="font-semibold text-fg">Homeroom icon</strong> in the header and choose <strong class="font-semibold text-fg">Start a new change</strong> to start building your app. Describe what you'd like in plain English, and it will be turned into your real app.</p>
-    </section>
-
-    <section>
-      <h2 class="section-label">What's already working</h2>
-      <ul class="list">
-        <li class="list-row items-start">
-          <svg class="mt-0.5 h-5 w-5 shrink-0 text-accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.4 0l-3-3a1 1 0 1 1 1.4-1.4L9 11.6l6.3-6.3a1 1 0 0 1 1.4 0Z" clip-rule="evenodd"/></svg>
-          <div>
-            <p class="text-body font-medium">Sign-in</p>
-            <p class="text-small text-muted">You're signed in through Homeroom automatically, with no accounts to build.</p>
-          </div>
-        </li>
-        <li class="list-row items-start">
-          <svg class="mt-0.5 h-5 w-5 shrink-0 text-accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.4 0l-3-3a1 1 0 1 1 1.4-1.4L9 11.6l6.3-6.3a1 1 0 0 1 1.4 0Z" clip-rule="evenodd"/></svg>
-          <div>
-            <p class="text-body font-medium">Database</p>
-            <p class="text-small text-muted">Your app has its own private database, ready to store things.</p>
-          </div>
-        </li>
-        <li class="list-row items-start">
-          <svg class="mt-0.5 h-5 w-5 shrink-0 text-accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.4 0l-3-3a1 1 0 1 1 1.4-1.4L9 11.6l6.3-6.3a1 1 0 0 1 1.4 0Z" clip-rule="evenodd"/></svg>
-          <div>
-            <p class="text-body font-medium">Live API</p>
-            <p class="text-small text-muted">The example below talks to a real server. Try it.</p>
-          </div>
-        </li>
-      </ul>
-    </section>
-    <!-- /usernode-starter-notice@1 -->
-
-    <section class="flex flex-col items-center gap-5">
-      <div class="w-full px-1">
-        <h2 class="text-heading">Try the example</h2>
-        <p class="text-small text-muted">This example will be replaced</p>
+  <!-- The app shell: a fixed-dark sidebar (a top bar below sm) with one
+       entry per tool, and a tool area that follows the viewer's Homeroom
+       theme. Each tool is its own view, switched by the URL hash so every
+       tool has a shareable address without extra server routes. -->
+  <div class="flex min-h-screen flex-col sm:flex-row">
+    <header class="sticky top-0 z-10 shrink-0 bg-sidebar text-sidebar-fg sm:h-screen sm:w-60">
+      <div class="flex items-center gap-2.5 px-4 py-3 sm:px-5 sm:pt-6 sm:pb-2">
+        <svg class="h-8 w-8" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" class="fill-accent"/><circle cx="50" cy="50" r="18" class="fill-on-accent"/></svg>
+        <span class="text-heading">Pixora</span>
       </div>
+      <nav aria-label="Tools" class="flex gap-1 overflow-x-auto px-3 pb-3 sm:flex-col sm:px-3 sm:pb-6">
+        <a href="#/creative" data-nav="creative" class="flex min-h-11 shrink-0 items-center gap-3 rounded-lg px-3 text-body font-medium text-sidebar-fg/70 hover:bg-sidebar-fg/10 aria-[current=page]:bg-accent/20 aria-[current=page]:text-sidebar-fg">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.1 6.4 6.4 2.1-6.4 2.1L12 20.5l-2.1-6.4-6.4-2.1 6.4-2.1Z"/></svg>
+          Creative
+        </a>
+        <a href="#/upscale" data-nav="upscale" class="flex min-h-11 shrink-0 items-center gap-3 rounded-lg px-3 text-body font-medium text-sidebar-fg/70 hover:bg-sidebar-fg/10 aria-[current=page]:bg-accent/20 aria-[current=page]:text-sidebar-fg">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7"/></svg>
+          Upscale Image
+        </a>
+        <a href="#/remove-bg" data-nav="remove-bg" class="flex min-h-11 shrink-0 items-center gap-3 rounded-lg px-3 text-body font-medium text-sidebar-fg/70 hover:bg-sidebar-fg/10 aria-[current=page]:bg-accent/20 aria-[current=page]:text-sidebar-fg">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2" stroke-dasharray="3 3"/><circle cx="12" cy="12" r="3"/></svg>
+          Remove Background
+        </a>
+        <a href="#/metadata" data-nav="metadata" class="flex min-h-11 shrink-0 items-center gap-3 rounded-lg px-3 text-body font-medium text-sidebar-fg/70 hover:bg-sidebar-fg/10 aria-[current=page]:bg-accent/20 aria-[current=page]:text-sidebar-fg">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></svg>
+          Metadata AI
+        </a>
+        <a href="#/prompt" data-nav="prompt" class="flex min-h-11 shrink-0 items-center gap-3 rounded-lg px-3 text-body font-medium text-sidebar-fg/70 hover:bg-sidebar-fg/10 aria-[current=page]:bg-accent/20 aria-[current=page]:text-sidebar-fg">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 5H4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v4l4.5-4H20a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1Z"/></svg>
+          Prompt Generator
+        </a>
+      </nav>
+    </header>
 
-      <button id="press-btn" class="btn-primary h-32 w-32 rounded-full text-title active:scale-95">Press!</button>
+    <main class="min-w-0 flex-1 px-4 pb-12 pt-6 sm:px-10 sm:py-12">
+      <div class="mx-auto w-full max-w-2xl">
 
-      <p id="count" class="min-h-6 text-body text-muted"></p>
-
-      <div class="w-full">
-        <h3 class="section-label">Leaderboard</h3>
-        <!-- Anything that loads data shows exactly one of these at a time:
-             loading, the data, empty (it loaded, and there is nothing yet)
-             or error (it did not load). The script below switches them. -->
-        <div id="leaderboard-loading" role="status">
-          <span class="sr-only">Loading the leaderboard</span>
-          <div class="list">
-            <div class="list-row"><div class="skeleton h-4 w-1/2"></div></div>
-            <div class="list-row"><div class="skeleton h-4 w-1/3"></div></div>
-            <div class="list-row"><div class="skeleton h-4 w-2/5"></div></div>
+        <section data-tool="creative" class="flex flex-col gap-8" hidden>
+          <header class="flex flex-col gap-1">
+            <h1 class="text-title">Creative</h1>
+            <p class="text-body text-muted">Generate images from a text description.</p>
+          </header>
+          <div class="card">
+            <div class="state-empty">
+              <svg class="h-10 w-10 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.1 6.4 6.4 2.1-6.4 2.1L12 20.5l-2.1-6.4-6.4-2.1 6.4-2.1Z"/></svg>
+              <p class="text-heading">No image yet</p>
+              <p class="text-body text-muted">When this tool is connected, describe what you want and the image will appear here.</p>
+            </div>
           </div>
-        </div>
-        <ol id="leaderboard" class="list" hidden></ol>
-        <div id="leaderboard-empty" class="state-empty" hidden>
-          <p class="text-heading">No presses yet</p>
-          <p class="text-body text-muted">Press the button to put your name on the board.</p>
-          <button id="leaderboard-press" class="btn-secondary">Press it</button>
-        </div>
-        <div id="leaderboard-error" class="state-error" hidden>
-          <svg class="h-6 w-6 text-danger" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-8-5a1 1 0 0 1 1 1v4a1 1 0 1 1-2 0V6a1 1 0 0 1 1-1Zm0 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd"/></svg>
-          <p class="text-heading">Couldn't load the leaderboard</p>
-          <p class="text-body text-muted">Pressing still works, and every press is saved.</p>
-          <button id="leaderboard-retry" class="btn-secondary">Retry</button>
-        </div>
+          <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <button class="btn-primary" disabled>Generate</button>
+            <p class="text-small text-muted">This tool isn't connected yet.</p>
+          </div>
+        </section>
+
+        <section data-tool="upscale" class="flex flex-col gap-8" hidden>
+          <header class="flex flex-col gap-1">
+            <h1 class="text-title">Upscale Image</h1>
+            <p class="text-body text-muted">Increase an image's resolution while keeping its detail.</p>
+          </header>
+          <div class="card">
+            <div class="state-empty">
+              <svg class="h-10 w-10 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7"/></svg>
+              <p class="text-heading">No image yet</p>
+              <p class="text-body text-muted">When this tool is connected, add an image and the upscaled version will appear here.</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <button class="btn-primary" disabled>Upscale</button>
+            <p class="text-small text-muted">This tool isn't connected yet.</p>
+          </div>
+        </section>
+
+        <section data-tool="remove-bg" class="flex flex-col gap-8" hidden>
+          <header class="flex flex-col gap-1">
+            <h1 class="text-title">Remove Background</h1>
+            <p class="text-body text-muted">Cut the background out of a picture, leaving the subject.</p>
+          </header>
+          <div class="card">
+            <div class="state-empty">
+              <svg class="h-10 w-10 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2" stroke-dasharray="3 3"/><circle cx="12" cy="12" r="3"/></svg>
+              <p class="text-heading">No image yet</p>
+              <p class="text-body text-muted">When this tool is connected, add an image and the cut-out subject will appear here.</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <button class="btn-primary" disabled>Remove background</button>
+            <p class="text-small text-muted">This tool isn't connected yet.</p>
+          </div>
+        </section>
+
+        <section data-tool="metadata" class="flex flex-col gap-8" hidden>
+          <header class="flex flex-col gap-1">
+            <h1 class="text-title">Metadata AI</h1>
+            <p class="text-body text-muted">Read and explain the metadata inside an image file.</p>
+          </header>
+          <div class="card">
+            <div class="state-empty">
+              <svg class="h-10 w-10 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></svg>
+              <p class="text-heading">No file yet</p>
+              <p class="text-body text-muted">When this tool is connected, add an image and its metadata will be shown here.</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <button class="btn-primary" disabled>Read metadata</button>
+            <p class="text-small text-muted">This tool isn't connected yet.</p>
+          </div>
+        </section>
+
+        <section data-tool="prompt" class="flex flex-col gap-8" hidden>
+          <header class="flex flex-col gap-1">
+            <h1 class="text-title">Prompt Generator</h1>
+            <p class="text-body text-muted">Turn a rough idea into a detailed prompt for image generation.</p>
+          </header>
+          <div class="card">
+            <div class="state-empty">
+              <svg class="h-10 w-10 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 5H4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v4l4.5-4H20a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1Z"/></svg>
+              <p class="text-heading">No image yet</p>
+              <p class="text-body text-muted">When this tool is connected, describe your idea and a ready-to-use prompt will appear here.</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <button class="btn-primary" disabled>Generate prompt</button>
+            <p class="text-small text-muted">This tool isn't connected yet.</p>
+          </div>
+        </section>
+
       </div>
-    </section>
+    </main>
+  </div>
 
-    <p class="text-center text-small text-muted">Built on Homeroom. This template screen disappears once you build your real app.</p>
-  </main>
-
+  <!-- Hash routing: one view at a time, shareable addresses, no extra
+       server routes. An unknown or missing hash falls back to Creative. -->
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get('token') || '';
-    const headers = token ? { 'x-usernode-token': token } : {};
-    const count = document.getElementById('count');
+    (function () {
+      const tools = [
+        { id: 'creative', title: 'Creative' },
+        { id: 'upscale', title: 'Upscale Image' },
+        { id: 'remove-bg', title: 'Remove Background' },
+        { id: 'metadata', title: 'Metadata AI' },
+        { id: 'prompt', title: 'Prompt Generator' },
+      ];
+      const byId = Object.fromEntries(tools.map((t) => [t.id, t]));
+      const sections = document.querySelectorAll('section[data-tool]');
+      const links = document.querySelectorAll('a[data-nav]');
 
-    // The leaderboard's states, one shown at a time. Empty only when the
-    // load worked and found nothing; a failure is the error state, never
-    // "No presses yet".
-    const views = {
-      loading: document.getElementById('leaderboard-loading'),
-      list: document.getElementById('leaderboard'),
-      empty: document.getElementById('leaderboard-empty'),
-      error: document.getElementById('leaderboard-error'),
-    };
-    function show(state) {
-      for (const [name, el] of Object.entries(views)) el.hidden = name !== state;
-    }
-
-    async function loadLeaderboard() {
-      let leaderboard;
-      try {
-        const res = await fetch('/api/leaderboard', { headers });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        ({ leaderboard } = await res.json());
-      } catch {
-        show('error');
-        return;
+      function route() {
+        const id = location.hash.replace(/^#\//, '');
+        const tool = byId[id] || tools[0];
+        for (const section of sections) section.hidden = section.dataset.tool !== tool.id;
+        for (const link of links) {
+          if (link.dataset.nav === tool.id) link.setAttribute('aria-current', 'page');
+          else link.removeAttribute('aria-current');
+        }
+        document.title = tool.title + ' — Pixora';
+        // On a deep link the active entry may sit outside the scrolled
+        // mobile nav; bring it into view.
+        const active = document.querySelector('a[data-nav][aria-current="page"]');
+        if (active) active.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       }
-      // People's names go in as text, never as HTML.
-      views.list.replaceChildren(...leaderboard.map((r, i) => {
-        const row = document.createElement('li');
-        row.className = 'list-row justify-between';
-        const name = document.createElement('span');
-        name.textContent = (i + 1) + '. ' + r.username;
-        const presses = document.createElement('span');
-        presses.className = 'tabular-nums text-muted';
-        presses.textContent = r.presses;
-        row.append(name, presses);
-        return row;
-      }));
-      const total = leaderboard.reduce((s, r) => s + parseInt(r.presses, 10), 0);
-      count.textContent = total + (total === 1 ? ' press so far' : ' presses so far');
-      show(leaderboard.length ? 'list' : 'empty');
-    }
 
-    async function press() {
-      try {
-        const res = await fetch('/api/press', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', ...headers },
-        });
-        if (res.ok) loadLeaderboard();
-        else if (res.status === 401) count.textContent = 'Sign in to press!';
-      } catch {}
-    }
-
-    document.getElementById('press-btn').addEventListener('click', press);
-    document.getElementById('leaderboard-press').addEventListener('click', press);
-    document.getElementById('leaderboard-retry').addEventListener('click', () => {
-      show('loading');
-      loadLeaderboard();
-    });
-
-    loadLeaderboard();
+      window.addEventListener('hashchange', route);
+      route();
+    })();
   </script>
 </body>
 </html>

@@ -102,22 +102,26 @@ tables you've marked private), etc.
 
 AI-powered creative tools for image generation, upscaling, background removal, and more
 
-_(add a sentence or two more of product context here so Claude Code has a
-shared understanding of what this app is for)_
+Pixora is a single-page tool suite: a fixed-dark sidebar lists five tools —
+Creative (text-to-image generation), Upscale Image, Remove Background,
+Metadata AI (reads and explains an image's metadata) and Prompt Generator
+(turns a rough idea into a detailed image prompt). Each tool is its own view
+switched by the URL hash (`#/creative`, `#/upscale`, `#/remove-bg`,
+`#/metadata`, `#/prompt`); Creative is the fallback for an unknown hash.
 
 ## Design
 
 This app's look. The first real version fills in the blanks; every later
 change follows it, and updates it when a request changes the look on purpose.
 
-- **Palette:** _(name the accent, any second colour and the neutrals, e.g.
-  "accent: tomato red; second: basil green; neutrals: warm greys")_
-- **Signature element:** _(the one thing on screen drawn from this app's
-  subject, which no other app would have)_
+- **Palette:** accent violet (violet-600 in light, violet-400 in dark —
+  matching the favicon); neutrals: warm stone greys; the sidebar is a fixed
+  near-black stone in both looks (`--sidebar` / `--sidebar-fg`)
+- **Signature element:** the fixed-dark sidebar with the active tool marked
+  by an accent-tinted background, against a tool area that follows the
+  viewer's Homeroom theme
 - **Type scale:** `text-title`, `text-heading`, `text-body`, `text-small`
   _(change their sizes in `tailwind.config.js` if you must, not their number)_
-- **One fixed look:** _(only for an app drawn as its own scene, such as a
-  game: which look, and why. Otherwise delete this line.)_
 
 The kit is in `styles/tailwind-input.css`: colour tokens with a light and
 a dark value (named in `tailwind.config.js`), and a few components
@@ -139,6 +143,9 @@ Re-theme by changing the token values there, keeping every text pair at
 
 ## App-specific conventions
 
-_(optional — e.g. "all currency values stored as integer cents, not
-floats"; "the `posts` table is append-only"; "avoid adding new
-dependencies"; etc.)_
+- The five tool pages are UI-only shells until each one is wired up: no
+  upload goes anywhere, and each tool's primary action button stays
+  `disabled` until its real processing exists. When wiring up a tool, remove
+  its "This tool isn't connected yet." note at the same time.
+- No new dependencies without reason; the app currently needs none beyond
+  express and jsonwebtoken.
