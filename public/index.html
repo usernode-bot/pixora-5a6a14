@@ -110,154 +110,99 @@
 <body class="min-h-screen bg-ground text-fg">
   <!-- Built from the design kit in styles/tailwind-input.css: colour tokens
        (bg-ground, text-muted, bg-accent, ...) that are right in both looks,
-       and components (btn-primary, list, card, state-empty, ...). The real
-       app keeps the kit; CLAUDE.md's "## Design" says how. -->
-  <main class="mx-auto flex max-w-md flex-col gap-8 px-4 py-10">
+       and components (btn-primary, list, field, state-empty, ...).
+       CLAUDE.md's "## Design" says how. -->
+  <main class="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-10">
+    <header class="flex flex-col gap-1 px-1">
+      <h1 class="text-title">Batch convert</h1>
+      <p class="text-body text-muted">Convert many images at once. Your files are converted on this device and are never uploaded.</p>
+    </header>
 
-    <!-- usernode-starter-notice@1 — starter-template messaging. When building
-         the user's real app, replace this whole screen and delete this block,
-         both sentinel comments included. -->
-    <section class="card flex flex-col items-start gap-3">
-      <span class="rounded-full bg-raised px-3 py-1 text-small font-medium text-muted">Starter template</span>
-      <h1 class="text-title">Pixora</h1>
-      <p class="text-body text-muted">Welcome to your new app! Everything on this screen is placeholder content that came with it.</p>
-      <p class="text-body text-muted">Tap the <strong class="font-semibold text-fg">Homeroom icon</strong> in the header and choose <strong class="font-semibold text-fg">Start a new change</strong> to start building your app. Describe what you'd like in plain English, and it will be turned into your real app.</p>
-    </section>
-
-    <section>
-      <h2 class="section-label">What's already working</h2>
-      <ul class="list">
-        <li class="list-row items-start">
-          <svg class="mt-0.5 h-5 w-5 shrink-0 text-accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.4 0l-3-3a1 1 0 1 1 1.4-1.4L9 11.6l6.3-6.3a1 1 0 0 1 1.4 0Z" clip-rule="evenodd"/></svg>
-          <div>
-            <p class="text-body font-medium">Sign-in</p>
-            <p class="text-small text-muted">You're signed in through Homeroom automatically, with no accounts to build.</p>
-          </div>
-        </li>
-        <li class="list-row items-start">
-          <svg class="mt-0.5 h-5 w-5 shrink-0 text-accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.4 0l-3-3a1 1 0 1 1 1.4-1.4L9 11.6l6.3-6.3a1 1 0 0 1 1.4 0Z" clip-rule="evenodd"/></svg>
-          <div>
-            <p class="text-body font-medium">Database</p>
-            <p class="text-small text-muted">Your app has its own private database, ready to store things.</p>
-          </div>
-        </li>
-        <li class="list-row items-start">
-          <svg class="mt-0.5 h-5 w-5 shrink-0 text-accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.4 0l-3-3a1 1 0 1 1 1.4-1.4L9 11.6l6.3-6.3a1 1 0 0 1 1.4 0Z" clip-rule="evenodd"/></svg>
-          <div>
-            <p class="text-body font-medium">Live API</p>
-            <p class="text-small text-muted">The example below talks to a real server. Try it.</p>
-          </div>
-        </li>
-      </ul>
-    </section>
-    <!-- /usernode-starter-notice@1 -->
-
-    <section class="flex flex-col items-center gap-5">
-      <div class="w-full px-1">
-        <h2 class="text-heading">Try the example</h2>
-        <p class="text-small text-muted">This example will be replaced</p>
+    <section aria-labelledby="settings-label">
+      <h2 id="settings-label" class="section-label">Settings</h2>
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <label class="flex flex-col gap-1">
+          <span class="px-1 text-small text-muted">Convert to</span>
+          <select id="opt-format" class="field">
+            <option value="image/webp">WebP</option>
+            <option value="image/jpeg">JPEG</option>
+            <option value="image/png">PNG</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1">
+          <span class="px-1 text-small text-muted">Size</span>
+          <select id="opt-size" class="field">
+            <option value="0">Original size</option>
+            <option value="4096">Up to 4096 px</option>
+            <option value="2048">Up to 2048 px</option>
+            <option value="1024">Up to 1024 px</option>
+            <option value="512">Up to 512 px</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1">
+          <span class="px-1 text-small text-muted">Quality</span>
+          <select id="opt-quality" class="field">
+            <option value="0.92">High</option>
+            <option value="0.8">Medium</option>
+            <option value="0.6">Smaller files</option>
+          </select>
+        </label>
       </div>
+      <p class="mt-2 px-1 text-small text-muted">Settings apply to files you add next. PNG ignores quality.</p>
+    </section>
 
-      <button id="press-btn" class="btn-primary h-32 w-32 rounded-full text-title active:scale-95">Press!</button>
-
-      <p id="count" class="min-h-6 text-body text-muted"></p>
-
-      <div class="w-full">
-        <h3 class="section-label">Leaderboard</h3>
-        <!-- Anything that loads data shows exactly one of these at a time:
-             loading, the data, empty (it loaded, and there is nothing yet)
-             or error (it did not load). The script below switches them. -->
-        <div id="leaderboard-loading" role="status">
-          <span class="sr-only">Loading the leaderboard</span>
-          <div class="list">
-            <div class="list-row"><div class="skeleton h-4 w-1/2"></div></div>
-            <div class="list-row"><div class="skeleton h-4 w-1/3"></div></div>
-            <div class="list-row"><div class="skeleton h-4 w-2/5"></div></div>
-          </div>
-        </div>
-        <ol id="leaderboard" class="list" hidden></ol>
-        <div id="leaderboard-empty" class="state-empty" hidden>
-          <p class="text-heading">No presses yet</p>
-          <p class="text-body text-muted">Press the button to put your name on the board.</p>
-          <button id="leaderboard-press" class="btn-secondary">Press it</button>
-        </div>
-        <div id="leaderboard-error" class="state-error" hidden>
-          <svg class="h-6 w-6 text-danger" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-8-5a1 1 0 0 1 1 1v4a1 1 0 1 1-2 0V6a1 1 0 0 1 1-1Zm0 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd"/></svg>
-          <p class="text-heading">Couldn't load the leaderboard</p>
-          <p class="text-body text-muted">Pressing still works, and every press is saved.</p>
-          <button id="leaderboard-retry" class="btn-secondary">Retry</button>
-        </div>
+    <section aria-labelledby="add-label">
+      <h2 id="add-label" class="sr-only">Add images</h2>
+      <div id="drop-zone" class="flex flex-col items-center gap-3 rounded-xl border-2 border-dashed border-line bg-surface px-4 py-8 text-center">
+        <svg class="h-8 w-8 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>
+        <p class="text-body"><span class="font-medium">Drop images here</span> <span class="text-muted">or</span></p>
+        <button id="choose-btn" type="button" class="btn-secondary">Choose images</button>
+        <input id="file-input" type="file" accept="image/*" multiple hidden>
+        <p class="text-small text-muted">PNG, JPEG, WebP, GIF, BMP and more, up to 50 MB each</p>
       </div>
     </section>
 
-    <p class="text-center text-small text-muted">Built on Homeroom. This template screen disappears once you build your real app.</p>
+    <section aria-labelledby="queue-label">
+      <div class="mb-2 flex flex-wrap items-center justify-between gap-2 px-1">
+        <h2 id="queue-label" class="text-heading">Queue</h2>
+        <div class="flex items-center gap-2">
+          <button id="clear-btn" class="btn-secondary" hidden>Clear list</button>
+          <button id="zip-btn" class="btn-primary" disabled>Download all (.zip)</button>
+        </div>
+      </div>
+      <p id="queue-summary" class="mb-2 px-1 text-small text-muted" role="status" aria-live="polite"></p>
+      <ul id="queue" class="list" hidden></ul>
+      <div id="queue-empty" class="state-empty">
+        <p class="text-heading">No images yet</p>
+        <p class="text-body text-muted">Add a few images and each one is converted with the settings above.</p>
+      </div>
+    </section>
   </main>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get('token') || '';
-    const headers = token ? { 'x-usernode-token': token } : {};
-    const count = document.getElementById('count');
+  <template id="row-template">
+    <li class="list-row items-start" data-job>
+      <img class="h-12 w-12 shrink-0 rounded-md bg-raised object-cover" alt="" data-thumb>
+      <div class="min-w-0 flex-1">
+        <p class="truncate text-body font-medium" data-name></p>
+        <p class="text-small text-muted" data-status></p>
+        <div class="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-raised" data-bar-wrap>
+          <div class="h-full rounded-full bg-accent motion-safe:transition-all" style="width:0%" data-bar></div>
+        </div>
+      </div>
+      <div class="flex shrink-0 items-center gap-1">
+        <a class="btn-secondary px-2 sm:px-4" data-download hidden>
+          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 3a1 1 0 0 1 1 1v6.6l2.3-2.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4L9 10.6V4a1 1 0 0 1 1-1ZM4 14a1 1 0 0 1 1 1v1h10v-1a1 1 0 1 1 2 0v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a1 1 0 0 1 1-1Z"/></svg>
+          <span class="hidden sm:inline">Download</span>
+        </a>
+        <button class="btn-secondary" data-retry hidden>Retry</button>
+        <button class="btn-secondary px-2" data-remove aria-label="Remove">
+          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M6.3 5.3a1 1 0 0 0-1.4 1.4L8.6 10l-3.7 3.3a1 1 0 1 0 1.4 1.4L10 11.4l3.7 3.3a1 1 0 0 0 1.4-1.4L11.4 10l3.7-3.3a1 1 0 0 0-1.4-1.4L10 8.6 6.3 5.3Z"/></svg>
+        </button>
+      </div>
+    </li>
+  </template>
 
-    // The leaderboard's states, one shown at a time. Empty only when the
-    // load worked and found nothing; a failure is the error state, never
-    // "No presses yet".
-    const views = {
-      loading: document.getElementById('leaderboard-loading'),
-      list: document.getElementById('leaderboard'),
-      empty: document.getElementById('leaderboard-empty'),
-      error: document.getElementById('leaderboard-error'),
-    };
-    function show(state) {
-      for (const [name, el] of Object.entries(views)) el.hidden = name !== state;
-    }
-
-    async function loadLeaderboard() {
-      let leaderboard;
-      try {
-        const res = await fetch('/api/leaderboard', { headers });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        ({ leaderboard } = await res.json());
-      } catch {
-        show('error');
-        return;
-      }
-      // People's names go in as text, never as HTML.
-      views.list.replaceChildren(...leaderboard.map((r, i) => {
-        const row = document.createElement('li');
-        row.className = 'list-row justify-between';
-        const name = document.createElement('span');
-        name.textContent = (i + 1) + '. ' + r.username;
-        const presses = document.createElement('span');
-        presses.className = 'tabular-nums text-muted';
-        presses.textContent = r.presses;
-        row.append(name, presses);
-        return row;
-      }));
-      const total = leaderboard.reduce((s, r) => s + parseInt(r.presses, 10), 0);
-      count.textContent = total + (total === 1 ? ' press so far' : ' presses so far');
-      show(leaderboard.length ? 'list' : 'empty');
-    }
-
-    async function press() {
-      try {
-        const res = await fetch('/api/press', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', ...headers },
-        });
-        if (res.ok) loadLeaderboard();
-        else if (res.status === 401) count.textContent = 'Sign in to press!';
-      } catch {}
-    }
-
-    document.getElementById('press-btn').addEventListener('click', press);
-    document.getElementById('leaderboard-press').addEventListener('click', press);
-    document.getElementById('leaderboard-retry').addEventListener('click', () => {
-      show('loading');
-      loadLeaderboard();
-    });
-
-    loadLeaderboard();
-  </script>
+  <script src="/js/batch-core.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 </html>

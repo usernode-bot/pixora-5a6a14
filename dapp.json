@@ -1,4 +1,15 @@
 {
   "description": "AI-powered creative tools for image generation, upscaling, background removal, and more",
-  "secrets": []
+  "secrets": [],
+  "tests": [
+    {
+      "id": "batch.convert",
+      "name": "Batch convert screen renders its queue and zip download",
+      "path": "/",
+      "expectSelector": "#drop-zone input[type=file][multiple]",
+      "expectText": "Download all (.zip)",
+      "visual": true,
+      "impact": ["public/index.html", "public/js/**", "styles/**"]
+    }
+  ]
 }
