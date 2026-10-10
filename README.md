@@ -1,28 +1,30 @@
 # Pixora
 
-> **Starter template** — this repo was scaffolded by Homeroom Social
-> Vibecoding. Everything in it is placeholder example code until the
-> app's first real feature is built.
+AI-powered creative tools for image generation, upscaling, background
+removal, and more. Runs on Homeroom.
 
-The scaffold is a small working demo that proves the plumbing works:
+## What's here today
 
-- **Sign-in** — the server verifies the platform-issued user token
-  (an RS256 JWT) on every request, so the app already knows who is
-  using it. No accounts to build.
-- **Database** — the app has its own private Postgres database; the
-  demo stores button presses in a `presses` table.
-- **Live API** — two example routes (`/api/press`,
-  `/api/leaderboard`) read and write through a real Express server.
-- **Styling** — Tailwind CSS, precompiled by `npm run build` during
-  image creation with either Kubernetes/Paketo or standalone Docker, in a
-  light and a dark look that follow the viewer's Homeroom theme.
+**Batch convert** (the home screen): drop or pick many images at once and
+convert them to WebP, JPEG or PNG, optionally scaling them down to a
+maximum side length.
 
-## Replacing the template
+- Each file gets its own row in a queue with its status and progress.
+- Up to three files convert at the same time; a file that fails shows why
+  and can be retried, and never stops the others.
+- Download each result on its own, or everything that finished as one
+  `.zip`.
+- Conversion happens in the browser with a canvas. Files are never
+  uploaded, so there is no server code or database table for it.
 
-Open the app on Homeroom, tap the Homeroom icon in the header, choose
-**Start a new change**, and describe the app you want in plain English.
-The template will be replaced with your real app. You can also run
-Claude Code against this repo directly; start with `CLAUDE.md`, which
-carries the app-specific notes and points at the platform rules.
+## Code
 
-Once the real app exists, rewrite this README to describe it.
+- `public/index.html`: the screen.
+- `public/js/app.js`: the queue UI, decoding and re-encoding.
+- `public/js/batch-core.js`: the parallel-limited queue and the `.zip`
+  writer, free of the DOM so they can be tested under node.
+- `tests/`: `npm test` runs them (`node --test`).
+- `server.js`: Express, platform sign-in, static files.
+
+Styling is Tailwind, precompiled by `npm run build` during the image build,
+in a light and a dark look that follow the viewer's Homeroom theme.
