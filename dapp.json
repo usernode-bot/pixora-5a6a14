@@ -11,5 +11,9 @@
       "visual": true,
       "impact": ["public/index.html", "public/js/**", "styles/**"]
     }
-  ]
+  ],
+  "icon": {
+    "image": "brand/icon.png",
+    "emoji": "🖼️"
+  }
 }
