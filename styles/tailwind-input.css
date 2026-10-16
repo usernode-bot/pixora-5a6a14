@@ -22,7 +22,8 @@
  * (warm greys, one teal accent) are a quiet starting point, not a look.
  * Keep every text pair at 4.5:1 or more in both looks: fg and muted on
  * ground, surface and raised; accent and danger on ground and surface;
- * on-accent on accent; on-danger on danger.
+ * on-accent on accent; on-danger on danger; sidebar-fg and sidebar-muted on
+ * sidebar and sidebar-raised.
  *
  * Adopting the native UI kit later? Point its --un-accent and
  * --un-accent-contrast at the accent and on-accent tokens.
@@ -40,6 +41,15 @@
     --danger: 185 28 28;
     --on-danger: 255 255 255;
     --focus: 13 148 136;      /* the keyboard focus ring */
+
+    /* The sidebar is dark in BOTH looks (Pixora's look), so these tokens
+       hold the same values here as in .dark below. */
+    --sidebar: 28 25 23;          /* the sidebar itself */
+    --sidebar-raised: 41 37 36;   /* hover, the current page */
+    --sidebar-fg: 245 245 244;    /* text */
+    --sidebar-muted: 168 162 158; /* labels, icons, the Soon tag */
+    --sidebar-line: 68 64 60;     /* borders inside the sidebar */
+    --sidebar-accent: 45 212 191; /* the teal edge on the current page */
   }
   .dark {
     --ground: 12 10 9;
@@ -53,6 +63,14 @@
     --danger: 248 113 113;
     --on-danger: 69 10 10;
     --focus: 94 234 212;
+
+    /* Same values as :root: the sidebar stays dark in both looks. */
+    --sidebar: 28 25 23;
+    --sidebar-raised: 41 37 36;
+    --sidebar-fg: 245 245 244;
+    --sidebar-muted: 168 162 158;
+    --sidebar-line: 68 64 60;
+    --sidebar-accent: 45 212 191;
   }
   /* el.hidden = true hides an element even when a class gives it a display
      (flex, the components below). */

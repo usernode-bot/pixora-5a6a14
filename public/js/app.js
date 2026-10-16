@@ -323,3 +323,75 @@
 
   renderSummary();
 })();
+
+// Navigation. The five tool pages are placeholders; Batch convert is the
+// working page. Views are hidden, not torn down, so the queue and its
+// object URLs survive a page switch.
+(function () {
+  'use strict';
+
+  const { ROUTES, routeForPath } = window.PixoraRoutes;
+
+  const views = Array.from(document.querySelectorAll('[data-view]'));
+  const navLinks = Array.from(document.querySelectorAll('a[data-nav]'));
+  const navLinksEl = document.getElementById('nav-links');
+  const menuBtn = document.getElementById('menu-btn');
+
+  function closeMenu() {
+    if (!navLinksEl || !menuBtn) return;
+    navLinksEl.classList.add('hidden');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  function toggleMenu() {
+    if (!navLinksEl || !menuBtn) return;
+    const willOpen = navLinksEl.classList.contains('hidden');
+    navLinksEl.classList.toggle('hidden', !willOpen);
+    menuBtn.setAttribute('aria-expanded', String(willOpen));
+  }
+
+  menuBtn.addEventListener('click', toggleMenu);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  function show(route, focusHeading) {
+    for (const view of views) view.hidden = view.dataset.view !== route.view;
+    for (const link of navLinks) {
+      if (link.getAttribute('href') === route.path) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    }
+    document.title = route.title + ' · Pixora';
+    closeMenu();
+    if (focusHeading) {
+      const heading = document.querySelector('[data-view="' + route.view + '"] h1');
+      if (heading) heading.focus();
+    }
+    window.scrollTo(0, 0);
+  }
+
+  let initial = routeForPath(location.pathname);
+  // An address Pixora doesn't know opens Batch convert and cleans the URL.
+  if (!initial) {
+    initial = ROUTES[0];
+    history.replaceState(null, '', initial.path);
+  }
+  show(initial, false);
+
+  // A real <a href> is behind every link, so Cmd/Ctrl/Shift/middle clicks
+  // fall through to the browser and the catch-all serves the same shell.
+  document.addEventListener('click', (e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const link = e.target && e.target.closest ? e.target.closest('a[data-nav]') : null;
+    if (!link) return;
+    const target = routeForPath(link.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    if (target.path !== location.pathname) history.pushState(null, '', target.path);
+    show(target, true);
+  });
+
+  window.addEventListener('popstate', () => {
+    show(routeForPath(location.pathname) || ROUTES[0], false);
+  });
+})();

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <script>
   // usernode-dev-console@1
   (function () {
@@ -112,72 +112,217 @@
        (bg-ground, text-muted, bg-accent, ...) that are right in both looks,
        and components (btn-primary, list, field, state-empty, ...).
        CLAUDE.md's "## Design" says how. -->
-  <main class="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-10">
-    <header class="flex flex-col gap-1 px-1">
-      <h1 class="text-title">Batch convert</h1>
-      <p class="text-body text-muted">Convert many images at once. Your files are converted on this device and are never uploaded.</p>
-    </header>
-
-    <section aria-labelledby="settings-label">
-      <h2 id="settings-label" class="section-label">Settings</h2>
-      <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <label class="flex flex-col gap-1">
-          <span class="px-1 text-small text-muted">Convert to</span>
-          <select id="opt-format" class="field">
-            <option value="image/webp">WebP</option>
-            <option value="image/jpeg">JPEG</option>
-            <option value="image/png">PNG</option>
-          </select>
-        </label>
-        <label class="flex flex-col gap-1">
-          <span class="px-1 text-small text-muted">Size</span>
-          <select id="opt-size" class="field">
-            <option value="0">Original size</option>
-            <option value="4096">Up to 4096 px</option>
-            <option value="2048">Up to 2048 px</option>
-            <option value="1024">Up to 1024 px</option>
-            <option value="512">Up to 512 px</option>
-          </select>
-        </label>
-        <label class="flex flex-col gap-1">
-          <span class="px-1 text-small text-muted">Quality</span>
-          <select id="opt-quality" class="field">
-            <option value="0.92">High</option>
-            <option value="0.8">Medium</option>
-            <option value="0.6">Smaller files</option>
-          </select>
-        </label>
+  <nav aria-label="Tools" class="border-b border-sidebar-line bg-sidebar text-sidebar-fg lg:border-b-0 lg:fixed lg:inset-y-0 lg:left-0 lg:w-64 lg:overflow-y-auto dark:lg:border-r dark:lg:border-sidebar-line">
+    <div class="flex min-h-14 items-center justify-between gap-2 px-4 py-2 lg:block lg:px-4 lg:py-5">
+      <div class="flex flex-col gap-0.5">
+        <p class="text-heading font-bold leading-tight">Pixora</p>
+        <p class="hidden text-small text-sidebar-muted lg:block">AI creative tools</p>
       </div>
-      <p class="mt-2 px-1 text-small text-muted">Settings apply to files you add next. PNG ignores quality.</p>
-    </section>
+      <button id="menu-btn" type="button" class="inline-flex min-h-11 items-center rounded-lg border border-sidebar-line px-3 text-body font-medium text-sidebar-fg hover:bg-sidebar-raised lg:hidden" aria-expanded="false" aria-controls="nav-links">Menu</button>
+    </div>
+    <div id="nav-links" class="hidden border-t border-sidebar-line px-3 pb-4 lg:block lg:border-t-0 lg:pb-6">
+      <p class="px-3 pb-1 pt-4 text-small font-medium text-sidebar-muted lg:pt-2">AI tools</p>
+      <a href="/creative" data-nav class="flex min-h-11 items-center gap-3 rounded-lg border-l-4 border-transparent py-2 pl-2 pr-3 text-body text-sidebar-fg hover:bg-sidebar-raised aria-[current=page]:border-sidebar-accent aria-[current=page]:bg-sidebar-raised">
+        <svg class="h-5 w-5 shrink-0 text-sidebar-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8L12 3z"/><path d="M19 15l.7 1.8 1.8.7-1.8.7L19 20l-.7-1.8-1.8-.7 1.8-.7L19 15z"/></svg>
+        <span class="min-w-0 flex-1">Creative</span>
+        <span class="rounded-full border border-sidebar-line px-2 py-0.5 text-small text-sidebar-muted">Soon</span>
+      </a>
+      <a href="/upscale" data-nav class="flex min-h-11 items-center gap-3 rounded-lg border-l-4 border-transparent py-2 pl-2 pr-3 text-body text-sidebar-fg hover:bg-sidebar-raised aria-[current=page]:border-sidebar-accent aria-[current=page]:bg-sidebar-raised">
+        <svg class="h-5 w-5 shrink-0 text-sidebar-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+        <span class="min-w-0 flex-1">Upscale Image</span>
+        <span class="rounded-full border border-sidebar-line px-2 py-0.5 text-small text-sidebar-muted">Soon</span>
+      </a>
+      <a href="/remove-background" data-nav class="flex min-h-11 items-center gap-3 rounded-lg border-l-4 border-transparent py-2 pl-2 pr-3 text-body text-sidebar-fg hover:bg-sidebar-raised aria-[current=page]:border-sidebar-accent aria-[current=page]:bg-sidebar-raised">
+        <svg class="h-5 w-5 shrink-0 text-sidebar-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>
+        <span class="min-w-0 flex-1">Remove Background</span>
+        <span class="rounded-full border border-sidebar-line px-2 py-0.5 text-small text-sidebar-muted">Soon</span>
+      </a>
+      <a href="/metadata" data-nav class="flex min-h-11 items-center gap-3 rounded-lg border-l-4 border-transparent py-2 pl-2 pr-3 text-body text-sidebar-fg hover:bg-sidebar-raised aria-[current=page]:border-sidebar-accent aria-[current=page]:bg-sidebar-raised">
+        <svg class="h-5 w-5 shrink-0 text-sidebar-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 2.6 21.4 11.4a2 2 0 0 1 0 2.8l-7.2 7.2a2 2 0 0 1-2.8 0L2.6 12.6A2 2 0 0 1 2 11.2V4a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
+        <span class="min-w-0 flex-1">Metadata AI</span>
+        <span class="rounded-full border border-sidebar-line px-2 py-0.5 text-small text-sidebar-muted">Soon</span>
+      </a>
+      <a href="/prompt-generator" data-nav class="flex min-h-11 items-center gap-3 rounded-lg border-l-4 border-transparent py-2 pl-2 pr-3 text-body text-sidebar-fg hover:bg-sidebar-raised aria-[current=page]:border-sidebar-accent aria-[current=page]:bg-sidebar-raised">
+        <svg class="h-5 w-5 shrink-0 text-sidebar-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
+        <span class="min-w-0 flex-1">Prompt Generator</span>
+        <span class="rounded-full border border-sidebar-line px-2 py-0.5 text-small text-sidebar-muted">Soon</span>
+      </a>
+      <p class="px-3 pb-1 pt-4 text-small font-medium text-sidebar-muted">Utilities</p>
+      <a href="/" data-nav class="flex min-h-11 items-center gap-3 rounded-lg border-l-4 border-transparent py-2 pl-2 pr-3 text-body text-sidebar-fg hover:bg-sidebar-raised aria-[current=page]:border-sidebar-accent aria-[current=page]:bg-sidebar-raised">
+        <svg class="h-5 w-5 shrink-0 text-sidebar-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+        <span class="min-w-0 flex-1">Batch convert</span>
+      </a>
+    </div>
+  </nav>
 
-    <section aria-labelledby="add-label">
-      <h2 id="add-label" class="sr-only">Add images</h2>
-      <div id="drop-zone" class="flex flex-col items-center gap-3 rounded-xl border-2 border-dashed border-line bg-surface px-4 py-8 text-center">
-        <svg class="h-8 w-8 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>
-        <p class="text-body"><span class="font-medium">Drop images here</span> <span class="text-muted">or</span></p>
-        <button id="choose-btn" type="button" class="btn-secondary">Choose images</button>
-        <input id="file-input" type="file" accept="image/*" multiple hidden>
-        <p class="text-small text-muted">PNG, JPEG, WebP, GIF, BMP and more, up to 50 MB each</p>
-      </div>
-    </section>
+  <div class="lg:pl-64">
+    <section data-view="batch" class="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-10">
+      <header class="flex flex-col gap-1 px-1">
+        <h1 class="text-title">Batch convert</h1>
+        <p class="text-body text-muted">Convert many images at once. Your files are converted on this device and are never uploaded.</p>
+      </header>
 
-    <section aria-labelledby="queue-label">
-      <div class="mb-2 flex flex-wrap items-center justify-between gap-2 px-1">
-        <h2 id="queue-label" class="text-heading">Queue</h2>
-        <div class="flex items-center gap-2">
-          <button id="clear-btn" class="btn-secondary" hidden>Clear list</button>
-          <button id="zip-btn" class="btn-primary" disabled>Download all (.zip)</button>
+      <section aria-labelledby="settings-label">
+        <h2 id="settings-label" class="section-label">Settings</h2>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <label class="flex flex-col gap-1">
+            <span class="px-1 text-small text-muted">Convert to</span>
+            <select id="opt-format" class="field">
+              <option value="image/webp">WebP</option>
+              <option value="image/jpeg">JPEG</option>
+              <option value="image/png">PNG</option>
+            </select>
+          </label>
+          <label class="flex flex-col gap-1">
+            <span class="px-1 text-small text-muted">Size</span>
+            <select id="opt-size" class="field">
+              <option value="0">Original size</option>
+              <option value="4096">Up to 4096 px</option>
+              <option value="2048">Up to 2048 px</option>
+              <option value="1024">Up to 1024 px</option>
+              <option value="512">Up to 512 px</option>
+            </select>
+          </label>
+          <label class="flex flex-col gap-1">
+            <span class="px-1 text-small text-muted">Quality</span>
+            <select id="opt-quality" class="field">
+              <option value="0.92">High</option>
+              <option value="0.8">Medium</option>
+              <option value="0.6">Smaller files</option>
+            </select>
+          </label>
         </div>
-      </div>
-      <p id="queue-summary" class="mb-2 px-1 text-small text-muted" role="status" aria-live="polite"></p>
-      <ul id="queue" class="list" hidden></ul>
-      <div id="queue-empty" class="state-empty">
-        <p class="text-heading">No images yet</p>
-        <p class="text-body text-muted">Add a few images and each one is converted with the settings above.</p>
+        <p class="mt-2 px-1 text-small text-muted">Settings apply to files you add next. PNG ignores quality.</p>
+      </section>
+
+      <section aria-labelledby="add-label">
+        <h2 id="add-label" class="sr-only">Add images</h2>
+        <div id="drop-zone" class="flex flex-col items-center gap-3 rounded-xl border-2 border-dashed border-line bg-surface px-4 py-8 text-center">
+          <svg class="h-8 w-8 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>
+          <p class="text-body"><span class="font-medium">Drop images here</span> <span class="text-muted">or</span></p>
+          <button id="choose-btn" type="button" class="btn-secondary">Choose images</button>
+          <input id="file-input" type="file" accept="image/*" multiple hidden>
+          <p class="text-small text-muted">PNG, JPEG, WebP, GIF, BMP and more, up to 50 MB each</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="queue-label">
+        <div class="mb-2 flex flex-wrap items-center justify-between gap-2 px-1">
+          <h2 id="queue-label" class="text-heading">Queue</h2>
+          <div class="flex items-center gap-2">
+            <button id="clear-btn" class="btn-secondary" hidden>Clear list</button>
+            <button id="zip-btn" class="btn-primary" disabled>Download all (.zip)</button>
+          </div>
+        </div>
+        <p id="queue-summary" class="mb-2 px-1 text-small text-muted" role="status" aria-live="polite"></p>
+        <ul id="queue" class="list" hidden></ul>
+        <div id="queue-empty" class="state-empty">
+          <p class="text-heading">No images yet</p>
+          <p class="text-body text-muted">Add a few images and each one is converted with the settings above.</p>
+        </div>
+      </section>
+    </section>
+
+    <section data-view="creative" class="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-10" hidden>
+      <header class="flex flex-col gap-1 px-1">
+        <h1 class="text-title" tabindex="-1">Creative</h1>
+        <p class="text-body text-muted">Create new images from a written description.</p>
+      </header>
+      <section aria-labelledby="creative-what-label">
+        <h2 id="creative-what-label" class="section-label">What it will do</h2>
+        <ul class="list">
+          <li class="list-row">Describe the image in your own words</li>
+          <li class="list-row">Pick a size and a style</li>
+          <li class="list-row">Choose from a few versions</li>
+        </ul>
+      </section>
+      <div class="state-empty rounded-xl border-2 border-dashed border-line bg-surface">
+        <p class="text-heading">Creative isn't ready yet</p>
+        <p class="text-body text-muted">Nothing is uploaded or processed on this page yet. Batch convert works today.</p>
+        <a href="/" data-nav class="btn-secondary">Open Batch convert</a>
       </div>
     </section>
-  </main>
+
+    <section data-view="upscale" class="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-10" hidden>
+      <header class="flex flex-col gap-1 px-1">
+        <h1 class="text-title" tabindex="-1">Upscale Image</h1>
+        <p class="text-body text-muted">Make small images larger and sharper.</p>
+      </header>
+      <section aria-labelledby="upscale-what-label">
+        <h2 id="upscale-what-label" class="section-label">What it will do</h2>
+        <ul class="list">
+          <li class="list-row">Enlarge an image 2x or 4x</li>
+          <li class="list-row">Keep edges and text sharp</li>
+          <li class="list-row">Download the larger image</li>
+        </ul>
+      </section>
+      <div class="state-empty rounded-xl border-2 border-dashed border-line bg-surface">
+        <p class="text-heading">Upscale Image isn't ready yet</p>
+        <p class="text-body text-muted">Nothing is uploaded or processed on this page yet. Batch convert works today.</p>
+        <a href="/" data-nav class="btn-secondary">Open Batch convert</a>
+      </div>
+    </section>
+
+    <section data-view="remove-background" class="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-10" hidden>
+      <header class="flex flex-col gap-1 px-1">
+        <h1 class="text-title" tabindex="-1">Remove Background</h1>
+        <p class="text-body text-muted">Cut the main subject out of a photo and leave a transparent background.</p>
+      </header>
+      <section aria-labelledby="remove-background-what-label">
+        <h2 id="remove-background-what-label" class="section-label">What it will do</h2>
+        <ul class="list">
+          <li class="list-row">Find the main subject of the photo</li>
+          <li class="list-row">Replace the background with transparency</li>
+          <li class="list-row">Download the result as a PNG</li>
+        </ul>
+      </section>
+      <div class="state-empty rounded-xl border-2 border-dashed border-line bg-surface">
+        <p class="text-heading">Remove Background isn't ready yet</p>
+        <p class="text-body text-muted">Nothing is uploaded or processed on this page yet. Batch convert works today.</p>
+        <a href="/" data-nav class="btn-secondary">Open Batch convert</a>
+      </div>
+    </section>
+
+    <section data-view="metadata" class="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-10" hidden>
+      <header class="flex flex-col gap-1 px-1">
+        <h1 class="text-title" tabindex="-1">Metadata AI</h1>
+        <p class="text-body text-muted">Write titles, descriptions and keywords for your images.</p>
+      </header>
+      <section aria-labelledby="metadata-what-label">
+        <h2 id="metadata-what-label" class="section-label">What it will do</h2>
+        <ul class="list">
+          <li class="list-row">Suggest a title and a short description</li>
+          <li class="list-row">Suggest keywords for stock sites</li>
+          <li class="list-row">Copy them or save them as a file</li>
+        </ul>
+      </section>
+      <div class="state-empty rounded-xl border-2 border-dashed border-line bg-surface">
+        <p class="text-heading">Metadata AI isn't ready yet</p>
+        <p class="text-body text-muted">Nothing is uploaded or processed on this page yet. Batch convert works today.</p>
+        <a href="/" data-nav class="btn-secondary">Open Batch convert</a>
+      </div>
+    </section>
+
+    <section data-view="prompt-generator" class="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-10" hidden>
+      <header class="flex flex-col gap-1 px-1">
+        <h1 class="text-title" tabindex="-1">Prompt Generator</h1>
+        <p class="text-body text-muted">Turn a rough idea into a detailed prompt for image tools.</p>
+      </header>
+      <section aria-labelledby="prompt-generator-what-label">
+        <h2 id="prompt-generator-what-label" class="section-label">What it will do</h2>
+        <ul class="list">
+          <li class="list-row">Start from a short idea</li>
+          <li class="list-row">Add style, lighting and camera details</li>
+          <li class="list-row">Copy the finished prompt</li>
+        </ul>
+      </section>
+      <div class="state-empty rounded-xl border-2 border-dashed border-line bg-surface">
+        <p class="text-heading">Prompt Generator isn't ready yet</p>
+        <p class="text-body text-muted">Nothing is uploaded or processed on this page yet. Batch convert works today.</p>
+        <a href="/" data-nav class="btn-secondary">Open Batch convert</a>
+      </div>
+    </section>
+  </div>
 
   <template id="row-template">
     <li class="list-row items-start" data-job>
@@ -203,6 +348,7 @@
   </template>
 
   <script src="/js/batch-core.js"></script>
+  <script src="/js/routes.js"></script>
   <script src="/js/app.js"></script>
 </body>
 </html>

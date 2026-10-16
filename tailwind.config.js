@@ -55,6 +55,13 @@ module.exports = {
         danger: token('danger'),
         'on-danger': token('on-danger'),
         focus: token('focus'), // the keyboard focus ring
+        // The sidebar: dark in both looks, so its tokens carry one value.
+        sidebar: token('sidebar'),
+        'sidebar-raised': token('sidebar-raised'),
+        'sidebar-fg': token('sidebar-fg'),
+        'sidebar-muted': token('sidebar-muted'),
+        'sidebar-line': token('sidebar-line'),
+        'sidebar-accent': token('sidebar-accent'),
       },
       // The type scale: four sizes, and nothing in between.
       fontSize: {

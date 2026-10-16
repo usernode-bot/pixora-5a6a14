@@ -10,6 +10,15 @@
       "expectText": "Download all (.zip)",
       "visual": true,
       "impact": ["public/index.html", "public/js/**", "styles/**"]
+    },
+    {
+      "id": "nav.tools",
+      "name": "Sidebar lists every tool and the Remove Background page renders",
+      "path": "/remove-background",
+      "expectSelector": "nav a[href='/prompt-generator']",
+      "expectText": "Remove Background isn't ready yet",
+      "visual": true,
+      "impact": ["public/index.html", "public/js/**", "styles/**"]
     }
   ],
   "icon": {
