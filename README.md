@@ -1,30 +1,49 @@
 # Pixora
 
-AI-powered creative tools for image generation, upscaling, background
-removal, and more. Runs on Homeroom.
+AI-powered creative tools for image generation, upscaling, background removal,
+and more.
 
-## What's here today
+Pixora opens on **Batch convert**, the one working tool: many images in, each
+converted to WebP/JPEG/PNG in the browser, downloaded one by one or as a .zip.
+Files never leave the device. The other five tools in the sidebar — Creative,
+Upscale Image, Remove Background, Metadata AI and Prompt Generator — are
+placeholder pages that describe what they will do. There is no AI, no payment
+and no sign-in behind them yet.
 
-**Batch convert** (the home screen): drop or pick many images at once and
-convert them to WebP, JPEG or PNG, optionally scaling them down to a
-maximum side length.
+## Pages
 
-- Each file gets its own row in a queue with its status and progress.
-- Up to three files convert at the same time; a file that fails shows why
-  and can be retried, and never stops the others.
-- Download each result on its own, or everything that finished as one
-  `.zip`.
-- Conversion happens in the browser with a canvas. Files are never
-  uploaded, so there is no server code or database table for it.
+The app is one HTML document; `public/js/routes.js` maps a path to a view.
+
+| Path | Page |
+| --- | --- |
+| `/` | Batch convert (working) |
+| `/creative` | Creative (placeholder) |
+| `/upscale` | Upscale Image (placeholder) |
+| `/remove-background` | Remove Background (placeholder) |
+| `/metadata` | Metadata AI (placeholder) |
+| `/prompt-generator` | Prompt Generator (placeholder) |
+
+Unknown paths fall back to `/`. The sidebar is a fixed dark column on wide
+screens and a dark top bar with a Menu button on phones.
 
 ## Code
 
-- `public/index.html`: the screen.
-- `public/js/app.js`: the queue UI, decoding and re-encoding.
-- `public/js/batch-core.js`: the parallel-limited queue and the `.zip`
-  writer, free of the DOM so they can be tested under node.
-- `tests/`: `npm test` runs them (`node --test`).
-- `server.js`: Express, platform sign-in, static files.
+- `server.js` — Express: serves `public/`, verifies the platform identity
+  token, redirects anonymous document visits to the platform shell.
+- `public/index.html` — the app shell: sidebar, every page's markup.
+- `public/js/routes.js` — path → view table (UMD, tested by `npm test`).
+- `public/js/app.js` — the batch queue's screen wiring, plus the navigation
+  (view switching, history, the phone menu).
+- `public/js/batch-core.js` — non-DOM batch logic: the parallel queue and the
+  hand-rolled stored .zip writer (UMD, tested by `npm test`).
+- `styles/tailwind-input.css` + `tailwind.config.js` — the design kit; the
+  stylesheet is precompiled to `public/tailwind.css` by `npm run build`.
 
-Styling is Tailwind, precompiled by `npm run build` during the image build,
-in a light and a dark look that follow the viewer's Homeroom theme.
+## Develop
+
+```sh
+npm ci --include=dev
+npm run build   # compile the stylesheet
+npm test
+npm start
+```

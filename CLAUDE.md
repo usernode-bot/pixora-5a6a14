@@ -117,7 +117,9 @@ change follows it, and updates it when a request changes the look on purpose.
   second colour; `danger` only for failures.
 - **Signature element:** the image queue: each file as a row with its own
   thumbnail, a thin accent progress bar while it works, and its result
-  size.
+  size. The sidebar is the other fixed piece: dark in both looks via the
+  `sidebar-*` tokens (identical values in `:root` and `.dark`), a teal edge
+  marking the current page, a top bar with a Menu button below `lg`.
 - **Type scale:** `text-title`, `text-heading`, `text-body`, `text-small`
   _(change their sizes in `tailwind.config.js` if you must, not their number)_
 
@@ -147,3 +149,7 @@ Re-theme by changing the token values there, keeping every text pair at
   dependency; images are already compressed.
 - The old starter `presses` table may still exist in the database; nothing
   reads it.
+- One path per tool: `public/js/routes.js` maps paths to `data-view`
+  sections in the single `public/index.html`. An unknown path falls back to
+  `/` (Batch convert), and views are hidden rather than torn down so the
+  batch queue survives page switches.
